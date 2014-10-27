@@ -1,4 +1,3 @@
-from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.graphics.context_instructions import Color
 from kivy.graphics.vertex_instructions import Rectangle
@@ -6,8 +5,6 @@ from kivy.core.window import Window
 from kivy.atlas import Atlas
 from kivy.clock import Clock
 import ast
-
-atlas = Atlas('balls.atlas')
 
 class Actor(Widget):
     states = {}
@@ -59,21 +56,3 @@ class Actor(Widget):
             self.rect.size = self.size
             self.rect.pos = self.pos
             self.rect.texture = self.get_texture()
-
-class GameScreen(Widget):
-    def __init__(self,**kwargs):
-        super(GameScreen,self).__init__(**kwargs)
-        self.size = Window.size
-        self.add_widget(Actor(size=(128,128),file='balls.actor',pos=(100,100)))
-
-
-
-class GameApp(App):
-    screen = None
-    def __init__(self):
-        super(GameApp,self).__init__()
-        self.screen = GameScreen()
-    def build(self):
-        return self.screen
-
-GameApp().run()

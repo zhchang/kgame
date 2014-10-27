@@ -1,7 +1,0 @@
-{
-"init":
-    {
-        "frames":["button-yellow","button-green","button-red"],
-        "delay":0.1
-    }
-}
