@@ -3,4 +3,4 @@ setup.cfg
 setup.py
 kgame/__init__.py
 kgame/actor.py
-kgame/kgame.py
+kgame/game.py

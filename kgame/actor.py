@@ -11,9 +11,11 @@ class Actor(Widget):
     state = 'init'
     rect = None
     frame = 0
-    def __init__(self,**args):
+    atlas = None
+    def __init__(self,atlas,**args):
+        print args
         super(Actor,self).__init__(**args)
-        print self.size
+        self.atlas = atlas
         if 'states' in args:
             self.states = args['states']
         elif 'file' in args:
@@ -25,16 +27,16 @@ class Actor(Widget):
             
     def get_texture(self):
         result = None
-        if atlas is not None and len(self.states)>0 and self.state in self.states:
+        if self.atlas is not None and len(self.states)>0 and self.state in self.states:
             thing = self.states[self.state]
             if isinstance(thing,str):
-                if thing in atlas.textures:
-                    result= atlas.textures[thing]
+                if thing in self.atlas.textures:
+                    result= self.atlas.textures[thing]
             elif isinstance(thing,dict):
                 key = thing['frames']
                 delay = thing['delay']
-                if key[self.frame] in atlas.textures:
-                    result= atlas.textures[key[self.frame]]
+                if key[self.frame] in self.atlas.textures:
+                    result= self.atlas.textures[key[self.frame]]
                 self.frame += 1
                 if self.frame >= len(key):
                     self.frame = 0
