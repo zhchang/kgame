@@ -4,18 +4,16 @@ from kivy.graphics.vertex_instructions import Rectangle
 from kivy.core.window import Window
 from kivy.atlas import Atlas
 from kivy.clock import Clock
-import ast
 
 class Actor(Widget):
 
-    def __init__(self,atlas,**args):
+    def __init__(self,scene,**args):
         super(Actor,self).__init__(**args)
         self.states = {}
         self.rect = None
         self.frame = 0
-        self.atlas = None
         self.touched = False
-        self.atlas = atlas
+        self.scene= scene
         self.child_map = {}
         self.handle_touch = False
         self.clock = None
@@ -28,16 +26,16 @@ class Actor(Widget):
             
     def get_texture(self):
         result = None
-        if self.atlas is not None and len(self.states)>0 and self.state in self.states:
+        if self.scene.atlas is not None and len(self.states)>0 and self.state in self.states:
             thing = self.states[self.state]
             if isinstance(thing,str):
-                if thing in self.atlas.textures:
-                    result= self.atlas.textures[thing]
+                if thing in self.scene.atlas.textures:
+                    result= self.scene.atlas.textures[thing]
             elif isinstance(thing,dict):
                 key = thing['frames']
                 delay = thing['delay']
-                if key[self.frame] in self.atlas.textures:
-                    result= self.atlas.textures[key[self.frame]]
+                if key[self.frame] in self.scene.atlas.textures:
+                    result= self.scene.atlas.textures[key[self.frame]]
                 self.frame += 1
                 if self.frame >= len(key):
                     self.frame = 0
