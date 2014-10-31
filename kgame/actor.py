@@ -62,7 +62,7 @@ class Actor(Widget):
 
     def on_touch_down(self,touch):
         result = super(Actor,self).on_touch_down(touch)
-        if not result and self.collide_point(touch.x,touch.y):
+        if self.handle_touch and not result and self.collide_point(touch.x,touch.y):
             self.touched = True
             return True 
         return False 
@@ -77,7 +77,7 @@ class Actor(Widget):
         self.touched = False
             
     def on_click(self):
-        pass
+        self.scene.trigger_event(('on_click',self.id))
     
     def add_widget(self,widget):
         super(Actor,self).add_widget(widget)
