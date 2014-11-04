@@ -19,6 +19,7 @@ class GameApp(App):
         print 'starting game: %s'%(game_file)
         self.game = import_it(game_file) 
     def build(self):
-        self.current_scene = import_it(self.game.scenes[0])(self)
+        config = self.game.scenes[0]
+        self.current_scene = import_it(config['class'])(self,**config)
         return self.current_scene
 

@@ -4,6 +4,7 @@ setup.py
 kgame/__init__.py
 kgame/actor.py
 kgame/game.py
+kgame/image_actor.py
 kgame/scene.py
 kgame/script.py
 kgame/util.py

@@ -12,18 +12,43 @@ class Scene(Actor):
         self.init_configs()
         self.load()
 
-    def update_size_pos(self):
-        self.update_dimension(self)
-
-    def update_dimension(self,actor):
+    def init_properties(self,**args):
+        super(Scene,self).init_properties(**args)
+        self.fill_mode = 'stretch'
         ratio_x = Window.size[0] / self.design_dimension[0]
         ratio_y = Window.size[1] / self.design_dimension[1]
-        actor.pos = (actor.design_pos[0] * ratio_x, actor.design_pos[1] * ratio_y)
+        if 'fill_mode' in args:
+            self.fill_mode = args['fill_mode']
+        self.size = Window.size 
+        self.pos = (0,0)
+        if self.fill_mode == 'fit_width':
+            print 'fitting width'
+            self.size = (Window.size[0],self.design_dimension[1] * ratio_x)
+            self.pos = (0,(Window.size[1] - self.size[1]) / 2)
+        elif self.fill_mode == 'fit_height':
+            print 'fitting height'
+            self.size= (self.design_dimension[0] * ratio_y,Window.size[1])
+            self.pos = ((Window.size[0] - self.size[0]) / 2,0)
+        self.x,self.y = self.pos
+        self.width,self.height = self.size
+        print self.size
+
+
+    def update_size_pos(self):
+        pass
+
+    def update_dimension(self,actor):
+        
+        ratio_x = self.size[0] / self.design_dimension[0]
+        ratio_y = self.size[1] / self.design_dimension[1]
+        print Window.size
+        print self.size
+        print self.design_dimension
+        print (ratio_x,ratio_y)
+        actor.pos = (self.x+actor.design_pos[0] * ratio_x, self.y+actor.design_pos[1] * ratio_y)
         actor.size= (actor.design_size[0] * ratio_x, actor.design_size[1] * ratio_y)
-        actor.x = actor.pos[0]
-        actor.y = actor.pos[1]
-        actor.width = actor.size[0]
-        actor.height = actor.size[1]
+        actor.x,actor.y = actor.pos
+        actor.width,actor.height= actor.size
         
     
     def init_configs(self):
@@ -31,7 +56,6 @@ class Scene(Actor):
         self.actor_configs = []
         self.triggers = {} 
         self.actors = []
-        self.size = Window.size
         self.atlas = None
     
     def load(self):
