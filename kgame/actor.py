@@ -17,12 +17,19 @@ class Actor(Widget):
         self.child_map = {}
         self.handle_touch = False
         self.clock = None
+        self.design_size = (0,0)
+        self.design_pos= (0,0)
+        if 'design_size' in args:
+            self.design_size = args['design_size']
+        if 'design_pos' in args:
+            self.design_pos= args['design_pos']
         if 'states' in args:
             self.states = args['states']
-        elif 'handle_touch' in args:
+        if 'handle_touch' in args:
             self.handle_touch = args['handle_touch']
         if self.states is not None and 'init' in self.states:
             self.switch('init')
+        self.update_size_pos()
             
     def get_texture(self):
         result = None
@@ -42,7 +49,18 @@ class Actor(Widget):
                 self.clock = Clock.schedule_once(self.apply_state,delay)
 
         return result
+    
+    def update_size_pos(self):
+        if self.scene is not None:
+            self.scene.update_dimension(self)
 
+    def resize(self,size):
+        self.design_size = size
+        self.update_size_pos()
+
+    def move(self,pos):
+        self.design_pos = pos
+        self.update_size_pos()
 
     def switch(self,state):
         Clock.unschedule(self.apply_state)
