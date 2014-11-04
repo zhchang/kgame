@@ -6,7 +6,6 @@ from actor import Actor
 
 class Scene(Actor):
     def __init__(self,game,**args):
-        self.design_dimension = (1080,1920)
         self.game = game
         super(Scene,self).__init__(None,**args)
         self.init_configs()
@@ -14,11 +13,10 @@ class Scene(Actor):
 
     def init_properties(self,**args):
         super(Scene,self).init_properties(**args)
-        self.fill_mode = 'stretch'
+        self.init_property('fill_mode','stretch',**args)
+        self.init_property('design_dimension',(1080,1920),**args)
         ratio_x = Window.size[0] / self.design_dimension[0]
         ratio_y = Window.size[1] / self.design_dimension[1]
-        if 'fill_mode' in args:
-            self.fill_mode = args['fill_mode']
         self.size = Window.size 
         self.pos = (0,0)
         if self.fill_mode == 'fit_width':

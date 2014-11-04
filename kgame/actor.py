@@ -7,20 +7,20 @@ class Actor(Widget):
         super(Actor,self).__init__(**args)
         self.scene= scene
         self.child_map = {}
-        self.handle_touch = False
         self.touched = False
-        self.design_size = (0,0)
-        self.design_pos= (0,0)
         self.init_properties(**args)
         self.update_size_pos()
 
     def init_properties(self,**args):
-        if 'design_size' in args:
-            self.design_size = args['design_size']
-        if 'design_pos' in args:
-            self.design_pos= args['design_pos']
-        if 'handle_touch' in args:
-            self.handle_touch = args['handle_touch']
+        self.init_property('design_size',(0,0),**args)
+        self.init_property('design_pos',(0,0),**args)
+        self.init_property('design_touch',False,**args)
+
+    def init_property(self,name,default,**args):
+        if name in args:
+            setattr(self,name,args[name])
+        else:
+            setattr(self,name,default)
     
     
     def update_size_pos(self):

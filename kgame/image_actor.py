@@ -9,12 +9,10 @@ class ImageActor(Actor):
 
     def init_properties(self,**args):
         super(ImageActor,self).init_properties(**args)
-        self.states = {}
         self.rect = None
         self.frame = 0
         self.clock = None
-        if 'states' in args:
-            self.states = args['states']
+        self.init_property('states',{},**args)
         if self.states is not None and 'init' in self.states:
             self.switch('init')
 

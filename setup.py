@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
         name='kgame',
         packages=['kgame'],
-        version = '0.93',
+        version = '0.94',
         description = 'a kivy game engine',
         author = 'Zhao Chang',
         author_email='zhchang@gmail.com',
